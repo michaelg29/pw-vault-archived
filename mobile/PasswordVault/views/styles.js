@@ -19,5 +19,11 @@ export const styles = StyleSheet.create({
     textInput: {
         height: 80,
         padding: 15,
+    },
+    listButton: {
+
+    },
+    listHeader: {
+        
     }
 });

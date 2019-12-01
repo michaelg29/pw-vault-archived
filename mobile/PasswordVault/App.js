@@ -2,18 +2,24 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 
 import { CreateAccount, Login } from './views/account';
+import { Dashboard } from './views/dashboard';
+import { CredentialsView } from './views/credentials';
+
 import { styles } from './views/styles';
+
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import * as FileSystem from 'expo-file-system';
 
-export default class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {new: true, ready: false};
   }
 
   async componentDidMount() {
-    FileSystem.getInfoAsync(`${FileSystem.documentDirectory}/pw.json`).then((tmp) => {
+    FileSystem.getInfoAsync(`${FileSystem.documentDirectory}/pw.txt`).then((tmp) => {
       this.setState({new: !tmp.exists, ready: true});
     });
   }
@@ -24,14 +30,14 @@ export default class App extends Component {
         // create account
         return (
           <View style={styles.container}>
-            <CreateAccount />
+            <CreateAccount navigation={this.props.navigation}/>
           </View>
         );
       } else {
         // login
         return (
           <View style={styles.container}>
-            <Login />
+            <Login navigation={this.props.navigation}/>
           </View>
         );
       }
@@ -42,3 +48,17 @@ export default class App extends Component {
     }
   }
 }
+
+const AppNavigator = createStackNavigator({
+  Primary: {
+    screen: App
+  },
+  Dashboard: {
+    screen: Dashboard
+  },
+  CredentialsView: {
+    screen: CredentialsView
+  }
+});
+
+export default createAppContainer(AppNavigator);

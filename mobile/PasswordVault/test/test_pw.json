@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Google",
+        "hyperlink": "https://www.google.com",
+        "pw": "ENCRYPTED_PW",
+        "security_questions": [
+            
+        ]
+    }
+]
