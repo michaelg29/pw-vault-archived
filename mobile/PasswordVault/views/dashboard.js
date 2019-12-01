@@ -21,7 +21,6 @@ export class Dashboard extends Component {
                     if (sorter === section.title) {
                         section.data.push(info.name);
                         sectionFound = true;
-                        break;
                     }
                 });
 
