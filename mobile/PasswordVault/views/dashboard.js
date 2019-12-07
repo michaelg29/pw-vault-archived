@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Button, SectionList } from 'react-native';
 
+import { styles } from './styles';
+
 import * as FileSystem from 'expo-file-system';
 import * as Crypto from 'expo-crypto';
 
@@ -13,15 +15,14 @@ export class Dashboard extends Component {
     _parseData() {
         if (global.data !== []) {
             global.data.array.forEach((info) => {
-                let sorter = info.name.charAt(0).toUpperCase();
+                let sorter = info.general.name.charAt(0).toUpperCase();
 
                 let sectionFound = false;
 
                 this.state.list.forEach((section) => {
                     if (sorter === section.title) {
-                        section.data.push(info.name);
+                        section.data.push(info.general.name);
                         sectionFound = true;
-                        break;
                     }
                 });
 
@@ -29,7 +30,7 @@ export class Dashboard extends Component {
                     // create section for site
                     this.state.list.push({
                         title: sorter,
-                        data: [info.name]
+                        data: [info.general.name]
                     })
                 }
             });
@@ -51,7 +52,7 @@ export class Dashboard extends Component {
                 let content = JSON.stringify([]);
                 FileSystem.writeAsStringAsync(path, content).then(() => {
                     global.data = [];
-                    this.setState({ ready: true});
+                    this.setState({ ready: true });
                 });
             }
         });
@@ -64,6 +65,11 @@ export class Dashboard extends Component {
     render() {
         return (
             <View>
+                <Button style={styles.navButton}
+                    onPress={() => this.props.navigation.navigate("CreateCredentials")}
+                    title={"Create Credentials"}
+                />
+{/*
                 <SectionList
                     sections={this.state.data}
                     renderItem={({name}) => <Button
@@ -73,7 +79,7 @@ export class Dashboard extends Component {
                                             />}
                     renderSectionHeader={({section}) => <Text style={styles.listHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
-                />
+/>*/}
             </View>
         );
     }

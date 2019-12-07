@@ -1,10 +1,14 @@
 [
     {
-        "name": "Google",
-        "hyperlink": "https://www.google.com",
-        "pw": "ENCRYPTED_PW",
-        "security_questions": [
-            
-        ]
+        "general": {
+            "name": "Google",
+            "name_iv": "djkahf;alskdj",
+            "hyperlink": "https://www.google.com",
+        },
+        "account": {
+            "password": "ENCRYPTED",
+            "username": "ENCRYPTED",
+            "email": "ENCRYPTED"
+        }
     }
 ]
