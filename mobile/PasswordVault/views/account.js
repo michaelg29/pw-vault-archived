@@ -6,6 +6,28 @@ import * as Crypto from 'expo-crypto';
 
 import { styles } from './styles';
 
+function readData(pw, props) {
+	let path = `${FileSystem.documentDirectory}/pw.json`;
+	global.data = []
+
+	FileSystem.getInfoAsync(path).then((info) => {
+		if (info.exists) {
+			// file exists, read
+			FileSystem.readAsStringAsync(path).then((content) => {
+				global.data = JSON.parse(content);
+				props.navigation.navigate('Dashboard');
+			});
+		} else {
+			// file doesn't exist, create
+			let content = JSON.stringify([]);
+			FileSystem.writeAsStringAsync(path, content).then(() => {
+				global.data = [];
+				props.navigation.navigate('Dashboard');
+			});
+		}
+	});
+}
+
 export class CreateAccount extends Component {
 	constructor(props) {
 		super(props);
@@ -23,17 +45,11 @@ export class CreateAccount extends Component {
 
 		// hash password
 		Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, text).then((digest) => {
-			console.log(digest);
 			// write password to file
 			FileSystem.writeAsStringAsync(`${FileSystem.documentDirectory}/pw.txt`, digest).then(() => {
-				this._success(text);
+				readData(text, this.props);
 			});
 		});
-	}
-
-	_success(password) {
-		global.pw = password;
-		this.props.navigation.navigate('Dashboard');
 	}
 
 	render() {
@@ -71,8 +87,7 @@ export class Login extends Component {
 			FileSystem.readAsStringAsync(`${FileSystem.documentDirectory}/pw.txt`).then((contents) => {
 				// test hash in file against input
 				if (digest === contents) {
-					global.pw = text;
-					this.props.navigation.navigate("Dashboard");
+					readData(text, this.props);
 				} else {
 					alert("Invalid password");
 				}

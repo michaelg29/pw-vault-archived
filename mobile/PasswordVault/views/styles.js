@@ -22,5 +22,9 @@ export const styles = StyleSheet.create({
 	},
 	listButton: {},
 	listHeader: {},
-	navButton: {}
+	navButton: {},
+	list: {
+		backgroundColor: 'black',
+		height: 300
+	}
 });
