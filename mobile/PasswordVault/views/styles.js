@@ -22,7 +22,13 @@ export const styles = StyleSheet.create({
 	},
 	listButton: {},
 	listHeader: {},
-	navButton: {},
+	navButton: {
+		
+	},
+	navButtonContainer: {
+		flex: 1,
+		alignItems: 'stretch'
+	},
 	list: {
 		backgroundColor: 'black',
 		height: 300

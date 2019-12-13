@@ -1,18 +1,68 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button, SectionList } from 'react-native';
 import { styles } from './styles';
 
 import { encrypt, decrypt } from '../utils/vigenere';
 
 import { FileSystem } from 'expo-file-system';
 
-import { Row, Col, Grid } from 'react-native-easy-grid';
-
 export class CredentialsView extends Component {
+	constructor(props) {
+		super(props);
+		this.name = this.props.navigation.getParam('name', 'undefined');
+		this.info = global.data[this._getInfo(this.name)];
+	}
+
+	_getInfo(name) {
+		for (var i = 0, len = global.data.length; i < len; i++) {
+			if (global.data[i].general.name === name) {
+				return i;
+			}
+		}
+	}
+
+	_parseData() {
+		let data = [];
+
+		for (var key in this.info) {
+			if (this.info.hasOwnProperty(key)) {
+				let section = {
+					title: key,
+					data: []
+				};
+
+				for (var property in this.info[key]) {
+					if (this.info[key].hasOwnProperty(property)) {
+						let pair = [ property, this.info[key][property] ];
+						section.data.push(pair);
+					}
+				}
+
+				data.push(section);
+			}
+		}
+
+		return data;
+	}
+
 	render() {
 		return (
 			<View>
-				<Text>{this.props.navigation.getParam('name', 'undefined')}</Text>
+				<Text>{this.name}</Text>
+
+				<SectionList
+					sections={this._parseData()}
+					renderItem={({ item, index, section }) => (
+						<View>
+							<Text key={`text:${index}`}>{item[0]}</Text>
+							<TextInput key={`input:${index}`} placeholder={item[0]} value={item[1]} />
+						</View>
+					)}
+					renderSectionHeader={({ section: { title } }) => (
+						<Text style={{ fontWeight: 'bold' }}>{title}</Text>
+					)}
+					keyExtractor={(item, index) => item + index}
+				/>
 			</View>
 		);
 	}
@@ -69,14 +119,17 @@ export class CreateCredentialsView extends Component {
 			data[section] = {};
 			Object.keys(this.inputs[section]).forEach((name) => {
 				let value = this.inputs[section][name].current && this.inputs[section][name].current.getValue();
-                data[section][name] = (section === 'general') ? value : encrypt(value, global.pw);
+				data[section][name] = section === 'general' ? value : encrypt(value, global.pw);
 			});
 		});
 
-        global.data.push(data);
-        FileSystem.writeAsStringAsync(`${FileSystem.documentDirectory}/pw.json`, JSON.stringify(global.data)).then(() => {
-            this.props.navigation.navigate("Dashboard", { ready: true });
-        });
+		global.data.push(data);
+		FileSystem.writeAsStringAsync(
+			`${FileSystem.documentDirectory}/pw.json`,
+			JSON.stringify(global.data)
+		).then(() => {
+			this.props.navigation.navigate('Dashboard', { ready: true });
+		});
 	}
 
 	render() {
