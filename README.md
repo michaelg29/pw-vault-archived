@@ -1,6 +1,7 @@
 # pw-vault
 
 Simple password vault with local storage and capability to send passwords and other credentials to a web client.
+Check out the [YouTube tutorial series](https://www.youtube.com/playlist?list=PLysLvOneEETM66KBDGR-ZLZiScJntNIT3) that goes along with the project.
 
 ## required packages
 ----
