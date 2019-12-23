@@ -7,6 +7,7 @@ import * as Crypto from 'expo-crypto';
 import { styles } from './styles';
 
 function readData(pw, props) {
+	global.pw = pw;
 	let path = `${FileSystem.documentDirectory}/pw.json`;
 	global.data = []
 

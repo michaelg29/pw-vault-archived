@@ -4,7 +4,7 @@ import { styles } from './styles';
 
 import { encrypt, decrypt } from '../utils/vigenere';
 
-import { FileSystem } from 'expo-file-system';
+import * as FileSystem from 'expo-file-system';
 
 export class CredentialsView extends Component {
 	constructor(props) {

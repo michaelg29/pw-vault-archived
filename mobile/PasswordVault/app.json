@@ -24,7 +24,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
-  }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.michaelgrieco.pwdvault"
+    },
+    "android": {
+      "package": "com.michaelgrieco.pwdvault"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "Password Vault",
+  "name": "passwordvault"
 }

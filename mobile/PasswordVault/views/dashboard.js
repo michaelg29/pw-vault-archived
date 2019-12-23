@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, Button, SectionList } from 'react-native';
+import { View, Text, Button, SectionList, TouchableHighlightBase } from 'react-native';
 
 import { styles } from './styles';
 
 import * as FileSystem from 'expo-file-system';
 import * as Crypto from 'expo-crypto';
 
+import { NetworkInfo } from 'react-native-network-info';
+
 export class Dashboard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { list: [], online: false };
 		this.currentName = '';
+
+		this.http = require('react-native-http-server');
 	}
 
 	_parseData() {
@@ -63,10 +67,32 @@ export class Dashboard extends Component {
         //     alert(`Web Connection Opened\nYour passcode is ${global.pw}`);
         //     this.setState({online: true});
         // });
-        
+		
+		// get ip address
+		NetworkInfo.getIPAddress().then((ip) => {
+			global.ip = ip;
+			console.log(ip);
+
+			// generate passcode
+			global.passcode = Math.floor((Math.random() * 8999) + 1000);
+
+			// start web server
+			var options = {
+				port: 5500
+			};
+
+			this.http.create(options, (req, send) => {
+				console.log(req);
+			});
+
+			// notify
+			alert(`Web connection opened at ${ip}:5500.\nYour passcode is ${passcode}`);
+			this.setState({online: true});
+		});
     }
 
     goOffline() {
+		this.http.stop();
         this.setState({online: false});
     }
 
@@ -103,7 +129,6 @@ export class Dashboard extends Component {
                         { cnxnButton }
                     </View>
                 </View>
-
 				<SectionList
 					sections={this._parseData()}
 					renderItem={({ item, index, section }) => (
