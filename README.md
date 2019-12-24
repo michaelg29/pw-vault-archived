@@ -9,11 +9,21 @@ Check out the [YouTube tutorial series](https://www.youtube.com/playlist?list=PL
 
 * npm packages
   * to install: *npm install*
-* expo-file-system
+* [react-native](https://www.npmjs.com/package/react-native)
+  * to install: *npm install -g react-native*
+* [expo](https://www.npmjs.com/package/expo-cli)
+  * to install: *npm install -g expo-cli*
+* [expo-file-system](https://docs.expo.io/versions/latest/sdk/filesystem/)
   * to install: *expo install expo-file-system*
-* expo-crypto
+* [expo-crypto](https://docs.expo.io/versions/latest/sdk/crypto/)
   * to install: *expo install expo-crypto*
-* react-navigation
+* [react-navigation](https://reactnavigation.org/docs/en/getting-started.html)
   * to install: *npm install react-navigation*
 * other react navigation packages
   * to install: *expo install react-native-gesture-handler react-native-reanimated*
+* [yarn](https://www.npmjs.com/package/yarn)
+  * to install: *npm install -g yarn*
+* [react-native-network-info](https://www.npmjs.com/package/react-native-network-info)
+  * to install: *npm install react-native-network-info --save*
+* [rnpm](https://www.npmjs.com/package/rnpm) (linker)
+  * to install: *npm install -g rnpm*
