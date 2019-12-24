@@ -3,6 +3,15 @@
 Simple password vault with local storage and capability to send passwords and other credentials to a web client.
 Check out the [YouTube tutorial series](https://www.youtube.com/playlist?list=PLysLvOneEETM66KBDGR-ZLZiScJntNIT3) that goes along with the project.
 
+## run commands
+----
+* with expo shell
+  1. *expo start*
+* without expo shell
+  1. *cd android && gradlew clean && cd ..*
+  2. *yarn start reset-cache*
+  3. In new terminal: *npx react-native run-android*
+
 ## required packages
 ----
 *not included in repository*
